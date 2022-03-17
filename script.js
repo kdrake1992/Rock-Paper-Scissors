@@ -1,63 +1,73 @@
 "use strict"
 
+let humanScore = 0;
+let computerScore = 0;
+const results = document.querySelector('.results')
+const round = document.createElement('div');
+const resultList = document.createElement('div');
+const scores = document.createElement('div');
 
-const game = function(rounds) {
-    let humanScore = 0;
-    let computerScore = 0;
+const computerPlay = function() {
+    const selection = ['Rock', 'Paper', 'Scissors'];
+    const choice = selection[Math.floor(Math.random() * 3)]
+    return choice;
+}
 
-    for(let i=0; i < rounds; i++) {
-        const computerPlay = function() {
-            const selection = ['Rock', 'Paper', 'Scissors'];
-            const choice = selection[Math.floor(Math.random() * 3)]
-            return choice;
-        }
-        
+const buttons = document.querySelectorAll('button');
+buttons.forEach((button) => {
+    button.addEventListener('click', () => {
+        game(button.id, computerPlay())
+    });
+});
+
+const currentScores = function() {
+    scores.classList.add('content');
+    scores.textContent = humanScore + " - " + computerScore;
+    results.appendChild(scores);
+}
+
+const game = function(playerSelection, computerSelection) {
+
         const playRound = function(playerSelection, computerSelection) {
-            let player = playerSelection.toLowerCase();
-            player = player.charAt(0).toUpperCase() + player.slice(1);
         
-            if((player === 'Rock' && computerSelection === 'Rock')
-                || (player === 'Paper' && computerSelection === 'Paper')
-                || (player === 'Scissors' && computerSelection === 'Scissors')) {
-                
-                return `Tie!`
+            if(playerSelection === computerSelection) {
+                return `Tie!`;
             }
-            else if((player === 'Rock' && computerSelection === 'Scissors')
-                || (player === 'Paper' && computerSelection === 'Rock')
-                || (player === 'Scissors' && computerSelection === 'Paper')) {
+            else if((playerSelection=== 'Rock' && computerSelection === 'Scissors')
+                || (playerSelection === 'Paper' && computerSelection === 'Rock')
+                || (playerSelection === 'Scissors' && computerSelection === 'Paper')) {
                 
                 humanScore++;
-                return `You Win! ${player} beats ${computerSelection}`
+                return `You Win! ${playerSelection} beats ${computerSelection}.`
             }
-            else if((computerSelection  === 'Rock' && player === 'Scissors')
-            || (computerSelection  === 'Paper' && player === 'Rock')
-            || (computerSelection  === 'Scissors' && player=== 'Paper')) {
-
+            else{
                 computerScore++;
-                return `You Lose! ${computerSelection} beats ${player}`
-            }
-            else {
-                return `Incorrect input! Try again.`
+                return `You Lose! ${computerSelection} beats ${playerSelection}.`
             }
           }
-        
-          const playerSelection = prompt('Enter Rock, Paper, or Scissors')
-          const computerSelection = computerPlay();
-          console.log(playRound(playerSelection, computerSelection));
-
-          console.log(humanScore,computerScore)
-    }
+          round.classList.add('content');
+          round.textContent = playRound(playerSelection, computerSelection);
+          results.appendChild(round);
 
     if(humanScore > computerScore) {
+        resultList.classList.add('content');
+        resultList.textContent = 'You are currently leading.';
+        results.appendChild(resultList);
+        currentScores();
         return 'You win!';
     }
     else if(computerScore > humanScore) {
+        resultList.classList.add('content');
+        resultList.textContent = 'You are currently losing.';
+        results.appendChild(resultList);
+        currentScores();
         return 'You lose!';
     }
     else {
+        resultList.classList.add('content');
+        resultList.textContent = 'Currently tied.';
+        results.appendChild(resultList);
+        currentScores();
         return 'Tie!';
     }
 }
-
-const rounds = prompt('How many rounds of Rock, Paper, Scissors do you want to play?')
-console.log(game(rounds));
