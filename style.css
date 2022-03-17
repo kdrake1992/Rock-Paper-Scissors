@@ -1,0 +1,33 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.top {
+    margin: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.buttons {
+    display: flex;
+    margin: 100px;
+    padding: 100px 100px;
+    border: 2px solid black;;
+    justify-content: center;
+}
+button {
+    margin: 5px;
+    padding: 10px;
+}
+
+.results {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 100px;
+    padding: 100px 100px;
+    border: 2px solid black;;
+}
