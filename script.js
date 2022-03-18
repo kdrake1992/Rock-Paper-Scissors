@@ -26,6 +26,11 @@ const currentScores = function() {
     results.appendChild(scores);
 }
 
+const resetScore = function() {
+    humanScore = 0;
+    computerScore = 0;
+}
+
 const game = function(playerSelection, computerSelection) {
 
         const playRound = function(playerSelection, computerSelection) {
@@ -50,24 +55,45 @@ const game = function(playerSelection, computerSelection) {
           results.appendChild(round);
 
     if(humanScore > computerScore) {
-        resultList.classList.add('content');
-        resultList.textContent = 'You are currently leading.';
-        results.appendChild(resultList);
-        currentScores();
-        return 'You win!';
+
+        if(humanScore === 5) {
+            resultList.classList.add('content');
+            resultList.textContent = 'WINNER!';
+            results.appendChild(resultList);
+            currentScores();
+            resetScore();
+            
+        }
+        else {
+            resultList.classList.add('content');
+            resultList.textContent = 'You are currently leading.';
+            results.appendChild(resultList);
+            currentScores();
+        }
+
     }
     else if(computerScore > humanScore) {
-        resultList.classList.add('content');
-        resultList.textContent = 'You are currently losing.';
-        results.appendChild(resultList);
-        currentScores();
-        return 'You lose!';
+
+        if(computerScore === 5) {
+            resultList.classList.add('content');
+            resultList.textContent = 'You lost!';
+            results.appendChild(resultList);
+            currentScores();
+            resetScore();
+
+        }
+        else {
+            resultList.classList.add('content');
+            resultList.textContent = 'You are currently losing.';
+            results.appendChild(resultList);
+            currentScores();
+        }
     }
+
     else {
         resultList.classList.add('content');
         resultList.textContent = 'Currently tied.';
         results.appendChild(resultList);
         currentScores();
-        return 'Tie!';
     }
 }
